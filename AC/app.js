@@ -2,10 +2,12 @@ Ext.application({
     name: 'AC',
 
     requires: [
-        'Ext.MessageBox'
+        'Ext.form.Panel','Ext.form.FieldSet','Ext.field.Email','Ext.field.Password',
+        'Ext.data.proxy.SessionStorage','Ext.data.Store'
     ],
 
-    views: ['Main'],
+    models: ['User'],
+    views: ['Main','Login'],
 
     icon: {
         '57': 'resources/icons/Icon.png',
@@ -29,8 +31,15 @@ Ext.application({
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
 
-        // Initialize the main view
-        Ext.Viewport.add(Ext.create('AC.view.Main'));
+        var UserSession = new Ext.data.proxy.SessionStorage({id:'ACUserKey'});
+        UserSession = UserSession.getModel();
+        if(!UserSession){
+            Ext.Viewport.add(Ext.create('AC.view.Login'));
+        }else{
+            var User = Ext.ModelMgr.getModel('User');
+            Ext.Viewport.add(Ext.create('AC.view.Main'));
+        }
+
     },
 
     onUpdated: function() {
