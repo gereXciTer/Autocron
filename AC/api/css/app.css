@@ -1,0 +1,347 @@
+/* JQMobile Overrides */
+.ui-content .ui-listview {
+	margin-bottom: 0;
+}
+.ui-field-contain {
+	padding: 0;
+}
+.detail-view .ui-input-text {
+	font-size: inherit;
+	font-weight: inherit;
+	line-height: inherit;
+}
+.ui-header .ui-btn {
+	max-width: 30%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+h5,
+h4:first-child {
+	margin-top: 0;
+}
+.ui-li-divider h4,
+.ui-li-divider h5 {
+	margin: 0 auto;
+}
+.welcome h5 {
+	margin-bottom: 0;
+}
+p {
+	font-size: 0.8em;
+}
+.list-view {
+	font-size: 0.9em;
+}
+.ui-controlgroup {
+	margin: 0;
+}
+.ui-field-contain {
+	border-bottom: none;
+}
+
+/* Yii Overrides */
+.detail-view {
+	padding: 0.5em;
+}
+.detail-view > div {
+	margin: 0.3em 0;
+	font-size: 0.8em;
+	font-weight: normal;
+}
+
+/* App Styles */
+#overlay {
+	width: 100%;
+	height: 200%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;
+	z-index: 10;
+	background: black;
+	opacity: 0.2;
+	moz-opacity: 0.2;
+}
+.social-buttons {
+	text-align: center;
+}
+.social-buttons a {
+	margin: 0 1em;
+}
+.dialog {
+	height: auto;
+	position: absolute;
+	z-index: 100;
+}
+.dialog .dialog-content {
+	margin: 0 auto;
+	width: 80%;
+	position: relative;
+	background: #4c84b2;
+	border: 3px solid #4c84b2;
+	border-radius: 5px;
+}
+.dialog .dialog-content .text {
+	padding: 1em;
+	background: #fff;
+	font-size: 0.9em;
+}
+.dialog h3 {
+	margin: 0;
+	padding-bottom: 0.2em;
+	text-align: center;
+	text-shadow: 0 -1px 1px #014D68;
+	color: #fff;
+}
+.dialog.flash-error .dialog-content {
+	background: #9e0b0f;
+	border-color: #9e0b0f;
+}
+.dialog.flash-success .dialog-content {
+	background: #00a651;
+	border-color: #00a651;
+}
+.dialog.flash-info .dialog-content {
+	background: #4c84b2;
+	border-color: #4c84b2;
+}
+.dialog.flash-message .dialog-content {
+	background-image:-webkit-gradient(linear,left top,left bottom,from(  #5F9CC5  ),to(  #396B9E  ));
+	background-image:-webkit-linear-gradient(  #5F9CC5 , #396B9E  );
+	background-image:   -moz-linear-gradient(  #5F9CC5 , #396B9E  );
+	background-image:    -ms-linear-gradient(  #5F9CC5 , #396B9E  );
+	background-image:     -o-linear-gradient(  #5F9CC5 , #396B9E  );
+	background-image:        linear-gradient(  #5F9CC5 , #396B9E  );
+	border-color: #4c84b2;
+}
+
+.dashboard-menu {
+	text-align: center;
+}
+.dashboard-item {
+	margin: 1em;
+	width: auto;
+	height: auto;
+	display: inline-block;
+	background: none;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	border: none;
+	color: #333;
+	text-shadow: none;
+}
+.dashboard-item .ui-btn-text {
+	font-size: 0.8em;
+}
+.dashboard-item .ui-btn-inner .ui-icon {
+	margin-left: -29px;
+	width: 58px;
+	height: 58px;
+	background-position: 50% 50%;
+	background-color: rgba(76,132,178,.75);
+	box-shadow: 0px 1px 4px rgba(76,132,178,.6);
+	-webkit-box-shadow: 0px 1px 4px rgba(76,132,178,.6);
+}
+.dashboard-item .ui-btn-inner {
+	border: none;
+	overflow: visible;
+}
+.dashboard-item.ui-btn-icon-top .ui-btn-inner{
+	padding: 70px 0 0 0;
+}
+.ui-icon-car {
+	background-image: url("../images/app-icon-car.png");
+}
+.ui-icon-shop {
+	background-image: url("../images/app-icon-shop.png");
+}
+.ui-icon-expense {
+	background-image: url("../images/app-icon-expense.png");
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+	.ui-icon-car {
+		background-image: url("../images/app-icon-car-highres.png");
+		background-size: 48px 48px;
+	}
+	.ui-icon-shop {
+		background-image: url("../images/app-icon-shop-highres.png");
+		background-size: 48px 48px;
+	}
+	.ui-icon-expense {
+		background-image: url("../images/app-icon-expense-highres.png");
+		background-size: 48px 48px;
+	}
+}
+
+.small {
+	font-size: 0.8em;
+}
+.center {
+	text-align: center;
+}
+
+.info-block h5 {
+	margin-bottom: 0;
+	padding: 0.2em 1em;
+	display: inline-block;
+	vertical-align: bottom;
+	color: #4c84b2;
+	background: #fff;
+	border-right: 2px solid #999;
+	border-radius: 5px;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+.info-block p {
+	margin-top: 0;
+	padding: 0.5em;
+	font-size: 0.9em;
+	border: 2px solid #999;
+	border-top: none;
+	border-left: none;
+	border-radius: 5px;
+	border-top-left-radius: 0;
+	background: #fff;
+}
+.dw {
+	font-family: Arial, Helvetica, Sans-serif;
+}
+.terms,
+.terms h3 {
+	font-size: 0.8em;
+}
+.location-terms {
+	font-size: 0.8em;
+}
+.location-terms h3 {
+	font-size: 0.9em;
+}
+.preloader {
+	position: absolute;
+	background: url(../images/preloader.gif) 50% 50% no-repeat;
+	bottom: 0px;
+	left: 50%;
+	margin-left: -8px;
+	height: 11px;
+	width: 16px;
+}
+.reminders {
+	font-size: 0.8em;
+	color: orange;
+	font-weight: normal;
+	text-shadow: none;
+}
+#map_canvas {
+	width: 100%;
+	height: 300px;
+}
+#map_canvas.hidden{
+	height: 2px;
+	visibility: hidden;
+}
+
+.map-container {
+	display: none;
+}
+#content {
+	margin-bottom: 1em;
+}
+.crons {
+	font-size: 0.8em;
+}
+.crons li div div {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+ul > li.zero-height-first-item {
+	display: none !important;
+}
+
+.search-pages {
+	font-size: 0.8em;
+	text-align: center;
+}
+.search-pages span {
+	padding: 0.5em;
+}
+.search-pages .active {
+	color: orange;
+}
+img.car_icon {
+	max-width: 25%;
+	height: auto;
+	display: inline-block;
+	float: right;
+	border: 2px solid #4B88B6;
+	-webkit-box-shadow: #4B88B6 0 0 0.5em
+}
+.car_image {
+	margin: 0 auto;
+	max-width: 100%;
+	height: auto;
+	display: block;
+	border: 2px solid #4B88B6;
+	-webkit-box-shadow: #4B88B6 0 0 0.5em
+}
+#register-form .car_image {
+	max-width: 80%;
+}
+.errorSummary {
+	font-size: 0.8em;
+	color: red;
+}
+#shops-list {
+}
+#shops-list-header {
+	display:none;
+}
+
+/* Search Styling */
+#searchcontrol .gsc-control {
+	width: 100%;
+}
+.gsc-search-box {
+	display: block;
+}
+.gsc-resultsHeader, .gsc-search-box {
+	display: none;
+}
+.gsc-search-button,
+.gsc-clear-button {
+	width: 0px;
+	visibility: hidden;
+}
+ul.listview li table td div {
+	font-weight: normal;
+}
+.gsc-cursor-box {
+	margin: 1em;
+}
+.gsc-cursor-page {
+	display: inline-block;
+	cursor: pointer;
+	margin: 0.5em 1em;
+}
+.gsc-cursor-current-page {
+	font-weight: bold;
+}
+.gsc-control div.ui-input-search {
+	position: relative;
+	width: 100%;
+}
+
+.introduction p {
+	font-size: 1em;
+}
+.introduction ul {
+	font-size: 0.9em;
+}
+.introduction ul li {
+	margin: 0.5em 0;
+}
+#vk_like {
+	display: inline-block !important;
+	width: auto !important;
+}

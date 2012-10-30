@@ -15,11 +15,18 @@ Ext.define("AC.view.Main", {
                 styleHtmlContent: true,
                 scrollable: true,
 
-                items: {
-                    docked: 'top',
-                    xtype: 'titlebar',
-                    title: 'Welcome to Sencha Touch 2'
-                },
+                items: [
+                    {
+                        docked: 'top',
+                        xtype: 'titlebar',
+                        title: 'Welcome to Sencha Touch 2'
+                    },
+                    {
+                        xtype: 'button',
+                        id: 'logoutbutton',
+                        text: 'Logout',
+                    }
+                ],
 
                 html: [
                     "You've just generated a new Sencha Touch 2 project. What you're looking at right now is the ",

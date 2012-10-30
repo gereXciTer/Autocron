@@ -3,7 +3,6 @@ Ext.define('AC.model.User', {
     extend: 'Ext.data.Model',
 
     config: {
-        fields: ['id', 'name', 'email', 'password'],
         proxy: {
             type: 'ajax',
             url : 'users.json',
@@ -11,9 +10,12 @@ Ext.define('AC.model.User', {
                 type: 'json',
                 rootProperty: 'users'
             }
-        }
+        },
+
+        fields: ['id', 'name', 'email', 'password']
     }
 });
+
 /*
 // Uses the User Model's Proxy
 Ext.create('Ext.data.Store', {

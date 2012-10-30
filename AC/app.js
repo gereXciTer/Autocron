@@ -3,11 +3,12 @@ Ext.application({
 
     requires: [
         'Ext.form.Panel','Ext.form.FieldSet','Ext.field.Email','Ext.field.Password',
-        'Ext.data.proxy.SessionStorage','Ext.data.Store'
+        'Ext.data.proxy.SessionStorage','Ext.data.Store','Ext.MessageBox'
     ],
 
     models: ['User'],
     views: ['Main','Login'],
+    controllers: ['Sessions'],
 
     icon: {
         '57': 'resources/icons/Icon.png',
@@ -15,6 +16,8 @@ Ext.application({
         '114': 'resources/icons/Icon@2x.png',
         '144': 'resources/icons/Icon~ipad@2x.png'
     },
+
+    apiUrl: 'api/',
 
     isIconPrecomposed: true,
 
@@ -31,8 +34,8 @@ Ext.application({
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
 
-        var UserSession = new Ext.data.proxy.SessionStorage({id:'ACUserKey'});
-        UserSession = UserSession.getModel();
+        var UserSession = sessionStorage.getItem('ACUserKey');
+        //UserSession = UserSession.getModel();
         if(!UserSession){
             Ext.Viewport.add(Ext.create('AC.view.Login'));
         }else{

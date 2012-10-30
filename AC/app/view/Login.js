@@ -1,6 +1,7 @@
 Ext.define("AC.view.Login", {
     extend: 'Ext.Panel',
     config: {
+        id: 'loginpanel',
         layout: 'fit',
         items: [
             {
@@ -10,6 +11,7 @@ Ext.define("AC.view.Login", {
             },
             {
                 xtype: 'formpanel',
+                id: 'loginForm',
                 items: [
                     {
                         xtype: 'fieldset',
@@ -18,10 +20,12 @@ Ext.define("AC.view.Login", {
                         items: [
                             {
                                 xtype: 'emailfield',
+                                name: 'email',
                                 label: 'Email'
                             },
                             {
                                 xtype: 'passwordfield',
+                                name: 'password',
                                 label: 'Password'
                             }
                         ]
@@ -29,10 +33,7 @@ Ext.define("AC.view.Login", {
                     {
                         xtype: 'button',
                         text: 'Login',
-                        ui: 'confirm',
-                        handler: function() {
-                            this.up('formpanel').submit();
-                        }
+                        ui: 'confirm'
                     }
                 ]
             }
