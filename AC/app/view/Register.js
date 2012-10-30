@@ -1,13 +1,20 @@
-Ext.define("AC.view.Login", {
+Ext.define("AC.view.Register", {
     extend: 'Ext.Panel',
     config: {
-        id: 'loginpanel',
+        id: 'registerpanel',
         layout: 'fit',
         items: [
             {
                 docked: 'top',
                 xtype: 'titlebar',
-                title: AC.app.title
+                title: AC.app.title,
+                items: [
+                    {
+                        xtype: 'button',
+                        text: 'Back',
+                        ui: 'back'
+                    }
+                ]
             },
             {
                 xtype: 'formpanel',
@@ -27,32 +34,18 @@ Ext.define("AC.view.Login", {
                                 xtype: 'passwordfield',
                                 name: 'password',
                                 label: 'Password'
+                            },
+                            {
+                                xtype: 'passwordfield',
+                                name: 'password',
+                                label: 'Password Repeat'
                             }
                         ]
                     },
                     {
-                        xtype: 'segmentedbutton',
-//                        docked: 'bottom',
-                        layout: {
-                            type: 'hbox',
-                            align: 'stretch'
-                        },
-                        items: [
-                            {
-                                flex: 1,
-                                xtype: 'button',
-                                text: 'Login',
-                                action: 'login',
-                                ui: 'confirm'
-                            },
-                            {
-                                flex: 1,
-                                xtype: 'button',
-                                text: 'Register',
-                                action: 'register',
-                                ui: 'action'
-                            }
-                        ]
+                        xtype: 'button',
+                        text: 'Register',
+                        ui: 'action'
                     }
                 ]
             }

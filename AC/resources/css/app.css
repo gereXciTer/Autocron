@@ -7378,7 +7378,7 @@ audio {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0 0.3em;
+  margin: 0 0.25em;
   max-width: 100%;
 }
 /* line 80, ../themes/stylesheets/sencha-touch/default/widgets/_toolbar.scss */
@@ -7386,7 +7386,7 @@ audio {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 0 .3em;
+  padding: 0 .25em;
 }
 
 /* line 128, ../themes/stylesheets/sencha-touch/default/widgets/_toolbar.scss */

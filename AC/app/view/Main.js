@@ -23,7 +23,7 @@ Ext.define("AC.view.Main", {
                     },
                     {
                         xtype: 'button',
-                        id: 'logoutbutton',
+                        action: 'logout',
                         text: 'Logout',
                     }
                 ],

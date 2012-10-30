@@ -1,13 +1,15 @@
 Ext.application({
     name: 'AC',
 
+    title: 'Autocron',
+
     requires: [
         'Ext.form.Panel','Ext.form.FieldSet','Ext.field.Email','Ext.field.Password',
-        'Ext.data.proxy.SessionStorage','Ext.data.Store','Ext.MessageBox'
+        'Ext.data.proxy.SessionStorage','Ext.data.Store','Ext.MessageBox','Ext.SegmentedButton'
     ],
 
     models: ['User'],
-    views: ['Main','Login'],
+    views: ['Main','Login','Register'],
     controllers: ['Sessions'],
 
     icon: {
@@ -17,7 +19,7 @@ Ext.application({
         '144': 'resources/icons/Icon~ipad@2x.png'
     },
 
-    apiUrl: 'api/',
+    apiUrl: 'http://autocron.ru/api/',
 
     isIconPrecomposed: true,
 
@@ -36,13 +38,60 @@ Ext.application({
 
         var UserSession = sessionStorage.getItem('ACUserKey');
         //UserSession = UserSession.getModel();
-        if(!UserSession){
-            Ext.Viewport.add(Ext.create('AC.view.Login'));
+        if(!AC.app.userAuth()){
+            this.getApplication().getHistory().add(Ext.create('Ext.app.Action', {
+                url: 'login'
+            }));
         }else{
             var User = Ext.ModelMgr.getModel('User');
-            Ext.Viewport.add(Ext.create('AC.view.Main'));
+            this.getApplication().getHistory().add(Ext.create('Ext.app.Action', {
+                url: 'home'
+            }));
         }
 
+    },
+
+    userAuth: function(){
+        var UserSession = sessionStorage.getItem('ACUserKey');
+        var UserId = sessionStorage.getItem('uid');
+        if(UserSession && UserId){
+            var authResult = false;
+            Ext.Ajax.request({
+                url: AC.app.apiUrl + '?r=site/userAuth',
+                params: {
+                    uid: UserId,
+                    token: UserSession
+                },
+                async: false,
+                withCredentials: false,
+                useDefaultXhrHeader: false,
+                callback: function(response) {
+                    //console.log(response.responseText)
+                },
+                success: function(response){
+                    //var text = response.responseText;
+                    var data = Ext.JSON.decode(response.responseText);
+                    if(UserId == data.uid && UserSession == data.token){
+                        authResult = true;
+                    }else{
+                        authResult = false;
+                    }
+                },
+                failure: function(response){
+                    //console.log(response.responseText);
+                    Ext.Msg.alert('Error', response.responseText, function(){
+                        sessionStorage.removeItem('ACUserKey');
+                        sessionStorage.removeItem('uid');
+                        Ext.Viewport.getActiveItem().hide({type: 'slide', direction: 'bottom'}).destroy();
+                        Ext.Viewport.add(Ext.create('AC.view.Login'));
+                    });
+                    authResult = false;
+                }
+            });
+            return authResult;
+        }else{
+            return false;
+        }
     },
 
     onUpdated: function() {

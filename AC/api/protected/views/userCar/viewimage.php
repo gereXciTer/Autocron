@@ -1,2 +1,0 @@
-<?php echo CHtml::link(Yii::t('app','Update image'), array('userCar/updateimage', 'id'=>$model->id), array('data-role'=>'button')); ?>
-<img src="<?php echo $model->getImageUrl();?>" class="car_image" />
