@@ -9,7 +9,7 @@ Ext.application({
         'Ext.field.Select'
     ],
 
-    models: ['User','CarMake'],
+    models: ['User','CarMake','CarModel','CarModelVersion','CarModelVariant'],
     views: ['Main','Login','Register'],
     controllers: ['Sessions'],
 
