@@ -18,7 +18,7 @@ Ext.define("AC.view.Register", {
             },
             {
                 xtype: 'formpanel',
-                id: 'loginForm',
+                id: 'registerForm',
                 items: [
                     {
                         xtype: 'fieldset',
