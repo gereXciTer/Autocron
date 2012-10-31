@@ -22,23 +22,16 @@ Ext.define("AC.view.Register", {
                 items: [
                     {
                         xtype: 'fieldset',
-                        title: 'Login',
+                        title: 'Choose a car',
                         instructions: '(all fields are required)',
                         items: [
                             {
-                                xtype: 'emailfield',
-                                name: 'email',
-                                label: 'Email'
-                            },
-                            {
-                                xtype: 'passwordfield',
-                                name: 'password',
-                                label: 'Password'
-                            },
-                            {
-                                xtype: 'passwordfield',
-                                name: 'password',
-                                label: 'Password Repeat'
+                                xtype: 'selectfield',
+                                name: 'make',
+                                label: 'Choose Make',
+                                placeHolder: 'Choose one...',
+                                store: 'CarMakeStore',
+                                displayField: 'name'
                             }
                         ]
                     },

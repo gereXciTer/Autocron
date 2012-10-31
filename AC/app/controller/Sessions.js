@@ -16,7 +16,7 @@ Ext.define('AC.controller.Sessions', {
                 tap: 'goRegister'
             },
             '#registerpanel button[ui=back]': {
-                tap: 'showLogin'
+                tap: 'goLogin'
             },
             '#loginpanel button[action=login]': {
                 tap: 'doLogin'
@@ -29,38 +29,35 @@ Ext.define('AC.controller.Sessions', {
 
     showLogin: function(){
         if(AC.app.userAuth()){
-            AC.app.getHistory().add(Ext.create('Ext.app.Action', {
-                url: 'home'
-            }));
+            AC.app.viewRoute('home');
         }
-        var currentview = Ext.Viewport.getActiveItem();
-        if(currentview){
-            currentview.hide({type: 'slideOut', direction: 'left'}).destroy();
-        }
-        Ext.Viewport.add(Ext.create('AC.view.Login')).show();
+        AC.app.switchView('Login');
     },
 
     showRegister: function(){
+        var CarMakeStore = Ext.create('Ext.data.Store', {
+            autoLoad: true,
+            autoSync: true,
+            model: 'AC.model.CarMake',
+            id: 'CarMakeStore'
+        });
+        // var CarMake = Ext.ModelMgr.getModel('AC.model.CarMake');
+        // CarMake.load(0, {
+        //     callback: function(carmake){
+        //         console.log(carmake);
+        //     }
+        // });
+
         if(AC.app.userAuth()){
-            AC.app.getHistory().add(Ext.create('Ext.app.Action', {
-                url: 'home'
-            }));
+            AC.app.viewRoute('home');
         }
-        var currentview = Ext.Viewport.getActiveItem();
-        if(currentview){
-            currentview.hide({type: 'slideOut', direction: 'left'}).destroy();
-        }
-        Ext.Viewport.add(Ext.create('AC.view.Register')).show();
+        AC.app.switchView('Register');
     },
 
     showHomePage: function(){
         AC.app.userAuth();
 
-        var currentview = Ext.Viewport.getActiveItem();
-        if(currentview){
-            currentview.hide({type: 'slideOut', direction: 'left'}).destroy();
-        }
-        Ext.Viewport.add(Ext.create('AC.view.Main')).show();
+        AC.app.switchView('Main');
     },
 
     doLogin: function() {
@@ -69,7 +66,7 @@ Ext.define('AC.controller.Sessions', {
 
         //AC.authenticate(values);
         Ext.Ajax.request({
-            url: AC.app.apiUrl + '?r=site/login',
+            url: AC.app.apiUrl + 'site/login',
             params: {
                 email: values.email,
                 password: values.password
@@ -88,9 +85,7 @@ Ext.define('AC.controller.Sessions', {
                 sessionStorage.removeItem('uid');
                 sessionStorage.setItem('ACUserKey', data.sessionKey);
                 sessionStorage.setItem('uid', data.uid);
-                AC.app.getHistory().add(Ext.create('Ext.app.Action', {
-                    url: 'home'
-                }));
+                AC.app.viewRoute('home');
            },
             failure: function(response){
                 var text = response.responseText;
@@ -103,15 +98,15 @@ Ext.define('AC.controller.Sessions', {
     doLogout: function(){
         sessionStorage.removeItem('ACUserKey');
         sessionStorage.removeItem('uid');
-        this.getApplication().getHistory().add(Ext.create('Ext.app.Action', {
-            url: 'login'
-        }));
-
+        AC.app.viewRoute('login');
     },
 
     goRegister: function(){
-        this.getApplication().getHistory().add(Ext.create('Ext.app.Action', {
-            url: 'register'
-        }));
+        AC.app.viewRoute('register');
+    },
+
+    goLogin: function(){
+        history.back();
+        //AC.app.viewRoute('login');
     }
 });

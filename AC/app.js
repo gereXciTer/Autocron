@@ -5,10 +5,11 @@ Ext.application({
 
     requires: [
         'Ext.form.Panel','Ext.form.FieldSet','Ext.field.Email','Ext.field.Password',
-        'Ext.data.proxy.SessionStorage','Ext.data.Store','Ext.MessageBox','Ext.SegmentedButton'
+        'Ext.data.proxy.SessionStorage','Ext.data.Store','Ext.MessageBox','Ext.SegmentedButton',
+        'Ext.field.Select'
     ],
 
-    models: ['User'],
+    models: ['User','CarMake'],
     views: ['Main','Login','Register'],
     controllers: ['Sessions'],
 
@@ -39,16 +40,31 @@ Ext.application({
         var UserSession = sessionStorage.getItem('ACUserKey');
         //UserSession = UserSession.getModel();
         if(!AC.app.userAuth()){
-            this.getApplication().getHistory().add(Ext.create('Ext.app.Action', {
-                url: 'login'
-            }));
+            AC.app.viewRoute('login');
         }else{
             var User = Ext.ModelMgr.getModel('User');
-            this.getApplication().getHistory().add(Ext.create('Ext.app.Action', {
-                url: 'home'
-            }));
+            AC.app.viewRoute('home');
         }
 
+    },
+
+    viewRoute: function(name){
+        AC.app.getHistory().add(Ext.create('Ext.app.Action', {
+            url: name
+        }));
+    },
+
+    switchView: function(name, type, direction){
+        if(!type)
+            type = 'slideOut';
+        if(!direction)
+            direction = 'left';
+
+        var currentview = Ext.Viewport.getActiveItem();
+        if(currentview){
+            currentview.hide({type: type, direction: direction}).destroy();
+        }
+        Ext.Viewport.add(Ext.create('AC.view.' + name)).show();
     },
 
     userAuth: function(){
@@ -57,7 +73,7 @@ Ext.application({
         if(UserSession && UserId){
             var authResult = false;
             Ext.Ajax.request({
-                url: AC.app.apiUrl + '?r=site/userAuth',
+                url: AC.app.apiUrl + 'site/userAuth',
                 params: {
                     uid: UserId,
                     token: UserSession
@@ -82,8 +98,7 @@ Ext.application({
                     Ext.Msg.alert('Error', response.responseText, function(){
                         sessionStorage.removeItem('ACUserKey');
                         sessionStorage.removeItem('uid');
-                        Ext.Viewport.getActiveItem().hide({type: 'slide', direction: 'bottom'}).destroy();
-                        Ext.Viewport.add(Ext.create('AC.view.Login'));
+                        AC.app.viewRoute('login');
                     });
                     authResult = false;
                 }
