@@ -1,6 +1,6 @@
 Ext.define('AC.helper.Config', {
 	singleton : true,
 	
-    title: 'Autocron',
+    title: 'TestApp',
     apiUrl: 'http://autocron.ru/api/'
 });

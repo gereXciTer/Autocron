@@ -2,7 +2,7 @@
     /**
      * The application's namespace, used by Sencha Command to generate classes
      */
-    "name": "Auto Cron",
+    "name": "Autocron",
 
     /**
      * The file path to this application's front HTML document, relative to this app.json file
@@ -16,7 +16,7 @@
      * This value is needed when build to resolve your application's dependencies if it requires server-side resources
      * that are not accessible via file system protocol.
      */
-    "url": 'http://localhost/ac/ac/index.html',
+    "url": null,
 
     /**
      * List of all JavaScript assets in the right execution order.
@@ -123,7 +123,7 @@
         "product": "touch",
         "minVersion": 3,
         "debug": false,
-        "logger": "no"
+        "logger": false
     },
 
     /**

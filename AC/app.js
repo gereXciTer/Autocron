@@ -29,12 +29,16 @@ Ext.application({
         '1536x2008': 'resources/startup/1536x2008.png',
         '1496x2048': 'resources/startup/1496x2048.png'
     },
+    
+    viewport: {
+        autoMaximize: true
+    },
 
     launch: function() {
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
 
-        var UserSession = sessionStorage.getItem('ACUserKey');
+        //var UserSession = sessionStorage.getItem('ACUserKey');
         //UserSession = UserSession.getModel();
         if(!AC.app.userAuth()){
             AC.app.viewRoute('login');

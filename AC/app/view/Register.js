@@ -81,6 +81,7 @@ Ext.define("AC.view.Register", {
     config: {
         id: 'registerpanel',
         layout: 'fit',
+        fullscreen: true,
         items: [
             {
                 docked: 'top',
@@ -106,7 +107,7 @@ Ext.define("AC.view.Register", {
                             {
                                 xtype: 'selectfield',
                                 name: 'make',
-                                label: 'Choose Make',
+                                label: 'Make',
                                 action: 'choosemake',
                                 placeHolder: 'Choose one...',
                                 store: 'CarMakeStore',
@@ -123,7 +124,7 @@ Ext.define("AC.view.Register", {
                                 xtype: 'selectfield',
                                 name: 'model',
                                 disabled: true,
-                                label: 'Choose Model',
+                                label: 'Model',
                                 action: 'choosemodel',
                                 placeHolder: 'Choose one...',
                                 displayField: 'name',
@@ -139,7 +140,7 @@ Ext.define("AC.view.Register", {
                                 xtype: 'selectfield',
                                 name: 'modelversion',
                                 disabled: true,
-                                label: 'Choose Version',
+                                label: 'Version',
                                 action: 'choosemodelversion',
                                 placeHolder: 'Choose one...',
                                 displayField: 'name',
@@ -155,7 +156,7 @@ Ext.define("AC.view.Register", {
                                 xtype: 'selectfield',
                                 name: 'modelvariant',
                                 disabled: true,
-                                label: 'Choose Variant',
+                                label: 'Variant',
                                 action: 'choosemodelvariant',
                                 placeHolder: 'Choose one...',
                                 displayField: 'name',
