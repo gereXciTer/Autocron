@@ -10,7 +10,7 @@ Ext.define('AC.model.CarMake', {
                     uid: sessionStorage.getItem('uid'),
                     token: sessionStorage.getItem('ACUserKey')
                 },
-            url : AC.app.apiUrl + 'api/CarMake',
+            url : AC.helper.Config.apiUrl + 'api/CarMake',
             reader: {
                 type: 'json',
                 rootProperty: 'items'

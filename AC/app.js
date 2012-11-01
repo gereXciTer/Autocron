@@ -1,9 +1,8 @@
 Ext.application({
     name: 'AC',
 
-    title: 'Autocron',
-
     requires: [
+        'AC.helper.Config',
         'Ext.form.Panel','Ext.form.FieldSet','Ext.field.Email','Ext.field.Password',
         'Ext.data.proxy.SessionStorage','Ext.data.Store','Ext.MessageBox','Ext.SegmentedButton',
         'Ext.field.Select'
@@ -19,8 +18,6 @@ Ext.application({
         '114': 'resources/icons/Icon@2x.png',
         '144': 'resources/icons/Icon~ipad@2x.png'
     },
-
-    apiUrl: 'http://autocron.ru/api/',
 
     isIconPrecomposed: true,
 
@@ -73,7 +70,7 @@ Ext.application({
         if(UserSession && UserId){
             var authResult = false;
             Ext.Ajax.request({
-                url: AC.app.apiUrl + 'site/userAuth',
+                url: AC.helper.Config.apiUrl + 'site/userAuth',
                 params: {
                     uid: UserId,
                     token: UserSession

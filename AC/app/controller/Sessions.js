@@ -58,12 +58,6 @@ Ext.define('AC.controller.Sessions', {
             autoLoad: true,
             id: 'CarMakeStore'
         });
-        // var CarMake = Ext.ModelMgr.getModel('AC.model.CarMake');
-        // CarMake.load(0, {
-        //     callback: function(carmake){
-        //         console.log(carmake);
-        //     }
-        // });
 
         if(AC.app.userAuth()){
             AC.app.viewRoute('home');
@@ -73,127 +67,86 @@ Ext.define('AC.controller.Sessions', {
 
     showCarModels: function(selectbox,newValue,oldValue){
         if(newValue!=null&&!selectbox.initdata){
-            var CarModelStore = Ext.create('Ext.data.Store', {
-                model: 'AC.model.CarModel',
-                sorters: [
-                    'name'
-                ],
-                filters: [
-                    {
-                        property: 'manufacturer_id',
-                        value   : this.getCarMakeField().getValue(),
-                        exactMatch: true
-                    }
-                ],
-                autoLoad: false,
-                proxy: {
-                    type: 'jsonp',
-                    params: {
-                        uid: sessionStorage.getItem('uid'),
-                        token: sessionStorage.getItem('ACUserKey')
-                    },
-                    extraParams: {
-                        manufacturer_id: this.getCarMakeField().getValue()
-                    },
-                    url : AC.app.apiUrl + 'api/CarModel',
-                    reader: {
-                        type: 'json',
-                        rootProperty: 'items'
-                    }
-                },
-                id: 'CarModelStore'
+            this.loadCarInfo('CarModel', this.getCarModelField(), {
+                manufacturer_id: this.getCarMakeField().getValue()
             });
-            this.getCarModelField().disable();
-            CarModelStore.load();
-            this.getCarModelField().setStore('CarModelStore').enable();
-            this.getCarModelVersionField().disable();
-            this.getCarModelVariantField().disable();
         }
     },
 
     showCarModelVersions: function(selectbox,newValue,oldValue){
         if(newValue!=null&&!selectbox.initdata){
-            var CarModelVersionStore = Ext.create('Ext.data.Store', {
-                model: 'AC.model.CarModelVersion',
-                sorters: [
-                    'name'
-                ],
-                filters: [
-                    {
-                        property: 'model_id',
-                        value   : this.getCarModelField().getValue(),
-                        exactMatch: true
-                    }
-                ],
-                autoLoad: false,
-                proxy: {
-                    type: 'jsonp',
-                    params: {
-                        uid: sessionStorage.getItem('uid'),
-                        token: sessionStorage.getItem('ACUserKey')
-                    },
-                    extraParams: {
-                        model_id: this.getCarModelField().getValue()
-                    },
-                    url : AC.app.apiUrl + 'api/CarModelVersion',
-                    reader: {
-                        type: 'json',
-                        rootProperty: 'items'
-                    }
-                },
-                id: 'CarModelVersionStore'
+            this.loadCarInfo('CarModelVersion', this.getCarModelVersionField(), {
+                model_id: this.getCarModelField().getValue()
             });
-            this.getCarModelVersionField().disable();
-            CarModelVersionStore.load();
-            this.getCarModelVersionField().setStore('CarModelVersionStore').enable();
-            this.getCarModelVariantField().disable();
         }
     },
 
     showCarModelVariants: function(selectbox,newValue,oldValue){
         if(newValue!=null&&!selectbox.initdata){
-            var CarModelVariantStore = Ext.create('Ext.data.Store', {
-                model: 'AC.model.CarModelVariant',
-                sorters: [
-                    'name'
-                ],
-                filters: [
-                    {
-                        property: 'model_id',
-                        value   : this.getCarModelVersionField().getValue(),
-                        exactMatch: true
-                    }
-                ],
-                autoLoad: false,
-                proxy: {
-                    type: 'jsonp',
-                    params: {
-                        uid: sessionStorage.getItem('uid'),
-                        token: sessionStorage.getItem('ACUserKey')
-                    },
-                    extraParams: {
-                        version_id: this.getCarModelVersionField().getValue()
-                    },
-                    url : AC.app.apiUrl + 'api/CarModelVariant',
-                    reader: {
-                        type: 'json',
-                        rootProperty: 'items'
-                    }
-                },
-                id: 'CarModelVariantStore'
+            this.loadCarInfo('CarModelVariant', this.getCarModelVariantField(), {
+                version_id: this.getCarModelVersionField().getValue()
             });
-            this.getCarModelVariantField().disable();
-            CarModelVariantStore.load(function(records, operation, success) {
-                    // the operation object contains all of the details of the load operation
-                    if(!records.length){
-                        this.getCarModelVariantField().hide();
-                    }else{
-                        this.getCarModelVariantField().show();
-                        this.getCarModelVariantField().setStore('CarModelVariantStore').enable();
-                        console.log(success);
-                    }
-            }, this);
         }
+    },
+
+    loadCarInfo: function(model, formfield, extraParams){
+        var filterProperty, filterPropertyValue;
+        for (filterProperty in extraParams) {
+            if (!extraParams.hasOwnProperty(filterProperty)) {  // Never forget this check!
+                continue;
+            }
+
+            filterPropertyValue = extraParams[filterProperty];
+        }
+
+        var Store = Ext.create('Ext.data.Store', {
+            model: 'AC.model.' + model,
+            sorters: [
+                'name'
+            ],
+            filters: [
+                {
+                    property: filterProperty,
+                    value   : filterPropertyValue,
+                    exactMatch: true
+                }
+            ],
+            autoLoad: false,
+            proxy: {
+                type: 'jsonp',
+                params: {
+                    uid: sessionStorage.getItem('uid'),
+                    token: sessionStorage.getItem('ACUserKey')
+                },
+                extraParams: extraParams,
+                url : AC.helper.Config.apiUrl + 'api/' + model,
+                reader: {
+                    type: 'json',
+                    rootProperty: 'items'
+                }
+            },
+            id: model + 'Store'
+        });
+        formfield.disable();
+        var idnumber = parseInt(formfield._itemId[formfield._itemId.length - 1]);
+        for(i = idnumber + 1; i < idnumber + 5; i++){
+            var selector = formfield._itemId;
+            selector = selector.substring(0,selector.length - 1) + i;
+            if(Ext.ComponentManager.get(selector))
+                Ext.ComponentManager.get(selector).disable();
+        }
+        // this.getCarModelField().disable();
+        // this.getCarModelVersionField().disable();
+        // this.getCarModelVariantField().disable();
+        Store.load(function(records, operation, success) {
+                // the operation object contains all of the details of the load operation
+                if(!records.length){
+                    formfield.hide();
+                }else{
+                    formfield.show();
+                    formfield.setStore(model + 'Store').enable();
+                }
+        }, this);
     },
 
     showHomePage: function(){
@@ -208,7 +161,7 @@ Ext.define('AC.controller.Sessions', {
 
         //AC.authenticate(values);
         Ext.Ajax.request({
-            url: AC.app.apiUrl + 'site/login',
+            url: AC.helper.Config.apiUrl + 'site/login',
             params: {
                 email: values.email,
                 password: values.password

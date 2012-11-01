@@ -7,7 +7,7 @@ Ext.define("AC.view.Login", {
             {
                 docked: 'top',
                 xtype: 'titlebar',
-                title: AC.app.title
+                title: AC.helper.Config.title
             },
             {
                 xtype: 'formpanel',

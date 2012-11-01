@@ -85,7 +85,7 @@ Ext.define("AC.view.Register", {
             {
                 docked: 'top',
                 xtype: 'titlebar',
-                title: AC.app.title,
+                title: AC.helper.Config.title,
                 items: [
                     {
                         xtype: 'button',
