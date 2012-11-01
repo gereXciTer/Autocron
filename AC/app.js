@@ -2,13 +2,13 @@ Ext.application({
     name: 'AC',
 
     requires: [
-        'AC.helper.Config',
+        'AC.helper.Config', 'AC.helper.Fn',
         'Ext.form.Panel','Ext.form.FieldSet','Ext.field.Email','Ext.field.Password',
         'Ext.data.proxy.SessionStorage','Ext.data.Store','Ext.MessageBox','Ext.SegmentedButton',
-        'Ext.field.Select'
+        'Ext.field.Select','Ext.Img'
     ],
 
-    models: ['User','CarMake','CarModel','CarModelVersion','CarModelVariant'],
+    models: ['User','CarMake','CarModel','CarModelVersion','CarModelImage','CarModelVariant'],
     views: ['Main','Login','Register'],
     controllers: ['Sessions'],
 
@@ -29,7 +29,7 @@ Ext.application({
         '1536x2008': 'resources/startup/1536x2008.png',
         '1496x2048': 'resources/startup/1496x2048.png'
     },
-    
+
     viewport: {
         autoMaximize: true
     },

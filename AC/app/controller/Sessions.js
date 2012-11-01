@@ -13,7 +13,9 @@ Ext.define('AC.controller.Sessions', {
             carMakeField: 'selectfield[action=choosemake]',
             carModelField: 'selectfield[action=choosemodel]',
             carModelVersionField: 'selectfield[action=choosemodelversion]',
-            carModelVariantField: 'selectfield[action=choosemodelvariant]'
+            carModelVariantField: 'selectfield[action=choosemodelvariant]',
+            carModelImage: '#registerForm image',
+            registerbutton: 'button[action=register]'
         },
         control: {
             'button[action=register]': {
@@ -28,7 +30,13 @@ Ext.define('AC.controller.Sessions', {
             'selectfield[action=choosemodelversion]': {
                 change: 'showCarModelVariants'
             },
-            '#registerpanel button[ui=back]': {
+            'selectfield[action=choosemodelvariant]': {
+                change: 'showCarModelImage'
+            },
+            '#registerForm image': {
+                tap: 'nextImage'
+            },
+            '#registerForm button[ui=back]': {
                 tap: 'goLogin'
             },
             '#loginpanel button[action=login]': {
@@ -70,6 +78,7 @@ Ext.define('AC.controller.Sessions', {
             this.loadCarInfo('CarModel', this.getCarModelField(), {
                 manufacturer_id: this.getCarMakeField().getValue()
             });
+            this.getCarModelImage().setSrc('').hide();
         }
     },
 
@@ -78,6 +87,7 @@ Ext.define('AC.controller.Sessions', {
             this.loadCarInfo('CarModelVersion', this.getCarModelVersionField(), {
                 model_id: this.getCarModelField().getValue()
             });
+            this.getCarModelImage().setSrc('').hide();
         }
     },
 
@@ -86,7 +96,49 @@ Ext.define('AC.controller.Sessions', {
             this.loadCarInfo('CarModelVariant', this.getCarModelVariantField(), {
                 version_id: this.getCarModelVersionField().getValue()
             });
+            this.getCarModelImage().setSrc('').hide();
         }
+    },
+
+    showCarModelImage: function(selectbox,newValue,oldValue){
+        if(newValue!=null&&!selectbox.initdata){
+            var Store = Ext.create('Ext.data.Store', {
+                model: 'AC.model.CarModelImage',
+                autoLoad: false,
+                proxy: {
+                    type: 'jsonp',
+                    params: {
+                        uid: sessionStorage.getItem('uid'),
+                        token: sessionStorage.getItem('ACUserKey')
+                    },
+                    extraParams: {
+                        car_model_version_id: this.getCarModelVersionField().getValue()
+                    },
+                    url : AC.helper.Config.apiUrl + 'api/CarModelVersionImage',
+                    reader: {
+                        type: 'json',
+                        rootProperty: 'items'
+                    }
+                },
+                id: 'CarModelImageStore'
+            });
+            var image = this.getCarModelImage();
+            image.setSrc('');
+            
+            Store.load(function(data){
+                image.setData(data);
+                image.setSrc(AC.helper.Config.carImagesUrl + data[0].data.url).show();
+                setTimeout(function(){
+                    Ext.getCmp('registerForm').getScrollable().getScroller().scrollToEnd(true);
+                }, 100);
+            });
+        }
+    },
+
+    nextImage: function(){        
+        var images = this.getCarModelImage().getData();
+        this.getCarModelImage().setSrc(AC.helper.Config.carImagesUrl + images[Math.floor(Math.random() * images.length)].data.url);
+        Ext.getCmp('registerForm').getScrollable().getScroller().scrollToEnd(true);
     },
 
     loadCarInfo: function(model, formfield, extraParams){

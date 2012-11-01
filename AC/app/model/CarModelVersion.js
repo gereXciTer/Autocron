@@ -4,6 +4,7 @@ Ext.define('AC.model.CarModelVersion', {
 
     config: {
         fields: ['id', 'model_id', 'name', 'image']
+//        hasMany: {model: 'AC.model.CarModelImage', name: 'images'}
     }
 });
 

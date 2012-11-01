@@ -82,6 +82,9 @@ Ext.define("AC.view.Register", {
         id: 'registerpanel',
         layout: 'fit',
         fullscreen: true,
+        scrollable: {
+            direction: 'vertical'
+        },
         items: [
             {
                 docked: 'top',
@@ -98,11 +101,13 @@ Ext.define("AC.view.Register", {
             {
                 xtype: 'formpanel',
                 id: 'registerForm',
+                scrollable: {
+                    direction: 'vertical'
+                },
                 items: [
                     {
                         xtype: 'fieldset',
                         title: 'Choose a car',
-                        instructions: '(all fields are required)',
                         items: [
                             {
                                 xtype: 'selectfield',
@@ -170,11 +175,19 @@ Ext.define("AC.view.Register", {
                                         console.log('tap');
                                     }
                                 }
-                            }
+                            },
+                            {
+                                xtype: 'image',
+                                id: 'carImage',
+                                cls: 'carImage',
+                                hidden: true,
+                                flex: 1
+                            },
                         ]
                     },
                     {
                         xtype: 'button',
+                        action: 'register',
                         text: 'Register',
                         ui: 'action'
                     }
