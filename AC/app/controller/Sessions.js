@@ -36,7 +36,7 @@ Ext.define('AC.controller.Sessions', {
             '#registerForm image': {
                 tap: 'nextImage'
             },
-            '#registerForm button[ui=back]': {
+            '#registerpanel button[ui=back]': {
                 tap: 'goLogin'
             },
             '#loginpanel button[action=login]': {
