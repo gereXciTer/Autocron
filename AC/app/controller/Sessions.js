@@ -15,12 +15,11 @@ Ext.define('AC.controller.Sessions', {
             carModelVersionField: 'selectfield[action=choosemodelversion]',
             carModelVariantField: 'selectfield[action=choosemodelvariant]',
             carModelImage: '#registerForm image',
-            registerbutton: 'button[action=register]'
+            registerbutton: 'button[action=register]',
+            registrationData: '#registrationData',
+            registrationForm: '#registerForm'
         },
         control: {
-            'button[action=register]': {
-                tap: 'goRegister'
-            },
             'selectfield[action=choosemake]': {
                 change: 'showCarModels'
             },
@@ -36,8 +35,14 @@ Ext.define('AC.controller.Sessions', {
             '#registerForm image': {
                 tap: 'nextImage'
             },
-            '#registerpanel button[ui=back]': {
-                tap: 'goLogin'
+            'button[action=doregister]': {
+                tap: 'doRegister'
+            },
+            'button[action=register]': {
+                tap: 'goRegister'
+            },
+            'button[ui=back]': {
+                tap: 'goBack'
             },
             '#loginpanel button[action=login]': {
                 tap: 'doLogin'
@@ -78,7 +83,7 @@ Ext.define('AC.controller.Sessions', {
             this.loadCarInfo('CarModel', this.getCarModelField(), {
                 manufacturer_id: this.getCarMakeField().getValue()
             });
-            this.getCarModelImage().setSrc('').hide();
+            this.getCarModelImage().setSrc('').setData(null).hide();
         }
     },
 
@@ -87,7 +92,7 @@ Ext.define('AC.controller.Sessions', {
             this.loadCarInfo('CarModelVersion', this.getCarModelVersionField(), {
                 model_id: this.getCarModelField().getValue()
             });
-            this.getCarModelImage().setSrc('').hide();
+            this.getCarModelImage().setSrc('').setData(null).hide();
         }
     },
 
@@ -96,7 +101,7 @@ Ext.define('AC.controller.Sessions', {
             this.loadCarInfo('CarModelVariant', this.getCarModelVariantField(), {
                 version_id: this.getCarModelVersionField().getValue()
             });
-            this.getCarModelImage().setSrc('').hide();
+            this.getCarModelImage().setSrc('').setData(null).hide();
         }
     },
 
@@ -123,15 +128,18 @@ Ext.define('AC.controller.Sessions', {
                 id: 'CarModelImageStore'
             });
             var image = this.getCarModelImage();
-            image.setSrc('');
+            image.setSrc('').setData(null);
             
             Store.load(function(data){
                 image.setData(data);
-                image.setSrc(AC.helper.Config.carImagesUrl + data[0].data.url).show();
+                if(data.length){
+                    image.setSrc(AC.helper.Config.carImagesUrl + data[0].data.url).show();
+                }
                 setTimeout(function(){
                     Ext.getCmp('registerForm').getScrollable().getScroller().scrollToEnd(true);
                 }, 100);
             });
+            this.showRegistrationData();
         }
     },
 
@@ -139,6 +147,10 @@ Ext.define('AC.controller.Sessions', {
         var images = this.getCarModelImage().getData();
         this.getCarModelImage().setSrc(AC.helper.Config.carImagesUrl + images[Math.floor(Math.random() * images.length)].data.url);
         Ext.getCmp('registerForm').getScrollable().getScroller().scrollToEnd(true);
+    },
+
+    showRegistrationData: function(){
+        this.getRegistrationData().show(true);
     },
 
     loadCarInfo: function(model, formfield, extraParams){
@@ -226,7 +238,7 @@ Ext.define('AC.controller.Sessions', {
             },
             success: function(response){
                 //var text = response.responseText;
-                console.log(response.responseText);
+                //console.log(response.responseText);
                 var data = Ext.JSON.decode(response.responseText);
                 sessionStorage.removeItem('ACUserKey');
                 sessionStorage.removeItem('uid');
@@ -252,8 +264,37 @@ Ext.define('AC.controller.Sessions', {
         AC.app.viewRoute('register');
     },
 
-    goLogin: function(){
+    doRegister: function(){
+        var regData = this.getRegistrationForm().getComponent('registrationData');
+        if(!regData.getComponent('password').getValue().length){
+            Ext.Msg.alert('Error', 'Password can not be blank');
+        }else if(regData.getComponent('password').getValue() == regData.getComponent('password_repeat').getValue()){
+
+            Ext.Ajax.request({
+                url: AC.helper.Config.apiUrl + 'site/register',
+                params: this.getRegistrationForm().getValues(),
+                withCredentials: false,
+                useDefaultXhrHeader: false,
+                success: function(response) {
+                    var data = Ext.JSON.decode(response.responseText);
+                    sessionStorage.removeItem('ACUserKey');
+                    sessionStorage.removeItem('uid');
+                    sessionStorage.setItem('ACUserKey', data.sessionKey);
+                    sessionStorage.setItem('uid', data.uid);
+                    AC.app.viewRoute('home');
+                },
+                failure: function(response){
+                    var text = response.responseText;
+                    Ext.Msg.alert('Error', response.responseText);
+                }
+            });
+
+        }else{
+            Ext.Msg.alert('Error', 'Password do not match');
+        }
+    },
+
+    goBack: function(){
         history.back();
-        //AC.app.viewRoute('login');
     }
 });

@@ -113,6 +113,7 @@ Ext.define("AC.view.Register", {
                                 xtype: 'selectfield',
                                 name: 'make',
                                 label: 'Make',
+                                showAnimation: 'slideIn',
                                 action: 'choosemake',
                                 placeHolder: 'Choose one...',
                                 store: 'CarMakeStore',
@@ -130,6 +131,7 @@ Ext.define("AC.view.Register", {
                                 name: 'model',
                                 disabled: true,
                                 label: 'Model',
+                                showAnimation: 'slideIn',
                                 action: 'choosemodel',
                                 placeHolder: 'Choose one...',
                                 displayField: 'name',
@@ -146,6 +148,7 @@ Ext.define("AC.view.Register", {
                                 name: 'modelversion',
                                 disabled: true,
                                 label: 'Version',
+                                showAnimation: 'slideIn',
                                 action: 'choosemodelversion',
                                 placeHolder: 'Choose one...',
                                 displayField: 'name',
@@ -162,6 +165,7 @@ Ext.define("AC.view.Register", {
                                 name: 'modelvariant',
                                 disabled: true,
                                 label: 'Variant',
+                                showAnimation: 'slideIn',
                                 action: 'choosemodelvariant',
                                 placeHolder: 'Choose one...',
                                 displayField: 'name',
@@ -186,8 +190,42 @@ Ext.define("AC.view.Register", {
                         ]
                     },
                     {
+                        xtype: 'fieldset',
+                        id: 'registrationData',
+                        hidden: true,
+                        title: 'Registration data',
+                        items: [
+                            {
+                                xtype: 'textfield',
+                                name: 'User[name]',
+                                required: true,
+                                label: 'Name'
+                            },
+                            {
+                                xtype: 'emailfield',
+                                name: 'User[email]',
+                                required: true,
+                                label: 'Email'
+                            },
+                            {
+                                xtype: 'passwordfield',
+                                id: 'password',
+                                name: 'User[password]',
+                                required: true,
+                                label: 'Password'
+                            },
+                            {
+                                xtype: 'passwordfield',
+                                id: 'password_repeat',
+                                name: 'User[password_repeat]',
+                                required: true,
+                                label: 'Confirm Password'
+                            }
+                        ]
+                    },
+                    {
                         xtype: 'button',
-                        action: 'register',
+                        action: 'doregister',
                         text: 'Register',
                         ui: 'action'
                     }
