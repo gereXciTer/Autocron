@@ -45,6 +45,26 @@ Ext.application({
         }else{
             var User = Ext.ModelMgr.getModel('User');
             AC.app.viewRoute('home');
+            var Store = Ext.create('Ext.data.Store', {
+                model: 'AC.model.User',
+                autoLoad: false,
+                proxy: {
+                    type: 'jsonp',
+                    params: {
+                        uid: sessionStorage.getItem('uid'),
+                        token: sessionStorage.getItem('ACUserKey')
+                    },
+                    extraParams: {
+                        // car_model_version_id: this.getCarModelVersionField().getValue()
+                    },
+                    url : AC.helper.Config.apiUrl + 'user/view/1'
+                },
+                id: 'UserStore'
+            });
+            
+            Store.load(function(data){
+                console.log(data);
+            });
         }
 
     },

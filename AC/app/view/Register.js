@@ -82,9 +82,7 @@ Ext.define("AC.view.Register", {
         id: 'registerpanel',
         layout: 'fit',
         fullscreen: true,
-        scrollable: {
-            direction: 'vertical'
-        },
+        scrollable: false,
         items: [
             {
                 docked: 'top',
@@ -227,6 +225,7 @@ Ext.define("AC.view.Register", {
                         xtype: 'button',
                         action: 'doregister',
                         text: 'Register',
+                        disabled: true,
                         ui: 'action'
                     }
                 ]

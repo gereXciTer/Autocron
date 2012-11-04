@@ -3,14 +3,14 @@ Ext.define('AC.model.User', {
     extend: 'Ext.data.Model',
 
     config: {
-        proxy: {
-            type: 'ajax',
-            url : 'users.json',
-            reader: {
-                type: 'json',
-                rootProperty: 'users'
-            }
-        },
+        // proxy: {
+        //     type: 'ajax',
+        //     url : AC.helper.Config.apiUrl + 'user/' + model,
+        //     reader: {
+        //         type: 'json',
+        //         rootProperty: 'items'
+        //     }
+        // },
 
         fields: ['id', 'name', 'email', 'password']
     }

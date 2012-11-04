@@ -1,31 +1,32 @@
 Ext.define("AC.view.Main", {
     extend: 'Ext.tab.Panel',
     requires: [
-        'Ext.TitleBar',
-        'Ext.Video'
+        'Ext.TitleBar'
     ],
     config: {
         tabBarPosition: 'bottom',
 
         items: [
             {
-                title: 'Welcome',
+                docked: 'top',
+                xtype: 'titlebar',
+                title: AC.helper.Config.title,
+                items: [
+                    {
+                        xtype: 'button',
+                        action: 'logout',
+                        text: 'Logout',
+                    }
+                ]
+            },
+            {
+                title: 'Home',
                 iconCls: 'home',
 
                 styleHtmlContent: true,
                 scrollable: true,
 
                 items: [
-                    {
-                        docked: 'top',
-                        xtype: 'titlebar',
-                        title: 'Welcome to Sencha Touch 2'
-                    },
-                    {
-                        xtype: 'button',
-                        action: 'logout',
-                        text: 'Logout',
-                    }
                 ],
 
                 html: [
@@ -35,19 +36,49 @@ Ext.define("AC.view.Main", {
                 ].join("")
             },
             {
-                title: 'Get Started',
-                iconCls: 'action',
+                title: 'Profile',
+                iconCls: 'user',
 
                 items: [
                     {
-                        docked: 'top',
-                        xtype: 'titlebar',
-                        title: 'Getting Started'
+                        xtype: 'fieldset',
+                        id: 'profileData',
+                        hidden: false,
+                        title: 'Profile data',
+                        items: [
+                            {
+                                xtype: 'textfield',
+                                name: 'User[name]',
+                                required: true,
+                                label: 'Name'
+                            },
+                            {
+                                xtype: 'emailfield',
+                                name: 'User[email]',
+                                required: true,
+                                label: 'Email'
+                            },
+                            {
+                                xtype: 'passwordfield',
+                                id: 'password',
+                                name: 'User[password]',
+                                required: true,
+                                label: 'New Password'
+                            },
+                            {
+                                xtype: 'passwordfield',
+                                id: 'password_repeat',
+                                name: 'User[password_repeat]',
+                                required: true,
+                                label: 'Confirm Password'
+                            }
+                        ]
                     },
                     {
-                        xtype: 'video',
-                        url: 'http://av.vimeo.com/64284/137/87347327.mp4?token=1330978144_f9b698fea38cd408d52a2393240c896c',
-                        posterUrl: 'http://b.vimeocdn.com/ts/261/062/261062119_640.jpg'
+                        xtype: 'button',
+                        action: 'updateprofile',
+                        text: 'Update',
+                        ui: 'action'
                     }
                 ]
             }

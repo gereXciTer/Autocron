@@ -16,6 +16,7 @@ Ext.define('AC.controller.Sessions', {
             carModelVariantField: 'selectfield[action=choosemodelvariant]',
             carModelImage: '#registerForm image',
             registerbutton: 'button[action=register]',
+            doregisterbutton: 'button[action=doregister]',
             registrationData: '#registrationData',
             registrationForm: '#registerForm'
         },
@@ -112,10 +113,6 @@ Ext.define('AC.controller.Sessions', {
                 autoLoad: false,
                 proxy: {
                     type: 'jsonp',
-                    params: {
-                        uid: sessionStorage.getItem('uid'),
-                        token: sessionStorage.getItem('ACUserKey')
-                    },
                     extraParams: {
                         car_model_version_id: this.getCarModelVersionField().getValue()
                     },
@@ -151,6 +148,7 @@ Ext.define('AC.controller.Sessions', {
 
     showRegistrationData: function(){
         this.getRegistrationData().show(true);
+        this.getDoregisterbutton().enable();
     },
 
     loadCarInfo: function(model, formfield, extraParams){
@@ -178,10 +176,6 @@ Ext.define('AC.controller.Sessions', {
             autoLoad: false,
             proxy: {
                 type: 'jsonp',
-                params: {
-                    uid: sessionStorage.getItem('uid'),
-                    token: sessionStorage.getItem('ACUserKey')
-                },
                 extraParams: extraParams,
                 url : AC.helper.Config.apiUrl + 'api/' + model,
                 reader: {
