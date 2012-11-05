@@ -2,7 +2,8 @@ Ext.define('AC.helper.Config', {
 	singleton : true,
 	
     title: 'TestApp',
-    apiUrl: 'http://autocron.ru/api/',
-    carImagesUrl: 'http://autocron.ru/images/cars/'
+    apiUrl: 'http://localhost/api/',
+    carImagesUrl: 'http://autocron.ru/images/cars/',
+    headersAppId: 'AUTOCRON'
 
 });

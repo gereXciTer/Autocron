@@ -5,12 +5,12 @@ Ext.application({
         'AC.helper.Config', 'AC.helper.Fn',
         'Ext.form.Panel','Ext.form.FieldSet','Ext.field.Email','Ext.field.Password',
         'Ext.data.proxy.SessionStorage','Ext.data.Store','Ext.MessageBox','Ext.SegmentedButton',
-        'Ext.field.Select','Ext.Img'
+        'Ext.field.Select','Ext.Img','Ext.TitleBar'
     ],
 
     models: ['User','CarMake','CarModel','CarModelVersion','CarModelImage','CarModelVariant'],
     views: ['Main','Login','Register'],
-    controllers: ['Sessions'],
+    controllers: ['Sessions', 'Main'],
 
     icon: {
         '57': 'resources/icons/Icon.png',
@@ -43,28 +43,7 @@ Ext.application({
         if(!AC.app.userAuth()){
             AC.app.viewRoute('login');
         }else{
-            var User = Ext.ModelMgr.getModel('User');
             AC.app.viewRoute('home');
-            var Store = Ext.create('Ext.data.Store', {
-                model: 'AC.model.User',
-                autoLoad: false,
-                proxy: {
-                    type: 'jsonp',
-                    params: {
-                        uid: sessionStorage.getItem('uid'),
-                        token: sessionStorage.getItem('ACUserKey')
-                    },
-                    extraParams: {
-                        // car_model_version_id: this.getCarModelVersionField().getValue()
-                    },
-                    url : AC.helper.Config.apiUrl + 'user/view/1'
-                },
-                id: 'UserStore'
-            });
-            
-            Store.load(function(data){
-                console.log(data);
-            });
         }
 
     },

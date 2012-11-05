@@ -38,7 +38,8 @@ Ext.define("AC.view.Main", {
             {
                 title: 'Profile',
                 iconCls: 'user',
-
+                xtype: 'formpanel',
+                id: 'profileForm',
                 items: [
                     {
                         xtype: 'fieldset',
@@ -48,27 +49,27 @@ Ext.define("AC.view.Main", {
                         items: [
                             {
                                 xtype: 'textfield',
-                                name: 'User[name]',
+                                name: 'name',
                                 required: true,
                                 label: 'Name'
                             },
                             {
                                 xtype: 'emailfield',
-                                name: 'User[email]',
+                                name: 'email',
                                 required: true,
                                 label: 'Email'
                             },
                             {
                                 xtype: 'passwordfield',
                                 id: 'password',
-                                name: 'User[password]',
+                                name: 'password',
                                 required: true,
                                 label: 'New Password'
                             },
                             {
                                 xtype: 'passwordfield',
                                 id: 'password_repeat',
-                                name: 'User[password_repeat]',
+                                name: 'password_repeat',
                                 required: true,
                                 label: 'Confirm Password'
                             }

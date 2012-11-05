@@ -179,8 +179,7 @@ Ext.define('AC.controller.Sessions', {
                 extraParams: extraParams,
                 url : AC.helper.Config.apiUrl + 'api/' + model,
                 reader: {
-                    type: 'json',
-                    rootProperty: 'items'
+                    type: 'json'
                 }
             },
             id: model + 'Store'
