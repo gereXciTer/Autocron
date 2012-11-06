@@ -1,17 +1,16 @@
-Ext.define('AC.model.User', {
+Ext.define('AC.model.UserCar', {
 
     extend: 'Ext.data.Model',
 
     config: {
-        fields: ['id', 'name', 'email', 'password'],
-        hasMany  : {model: 'AC.model.UserCar', name: 'cars'},
+        fields: ['id', 'uid', 'car_id', 'car_variant', 'name', 'date_added', 'mileage_initial', 'mileage', 'image', 'year_built'],
         proxy: {
             type: 'rest',
             headers: {
                 autocrontoken : sessionStorage.getItem('ACUserKey'),
                 autocronuserid: sessionStorage.getItem('uid')
             },
-            url : AC.helper.Config.apiUrl + 'api/user'
+            url : AC.helper.Config.apiUrl + 'api/userCar'
         }
     }
 });

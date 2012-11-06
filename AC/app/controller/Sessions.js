@@ -152,6 +152,11 @@ Ext.define('AC.controller.Sessions', {
     },
 
     loadCarInfo: function(model, formfield, extraParams){
+        var loadingMask = new Ext.LoadMask({
+                msg: "Loading..."
+            });
+        Ext.Viewport.add(loadingMask);
+
         var filterProperty, filterPropertyValue;
         for (filterProperty in extraParams) {
             if (!extraParams.hasOwnProperty(filterProperty)) {  // Never forget this check!
@@ -203,6 +208,7 @@ Ext.define('AC.controller.Sessions', {
                     formfield.show();
                     formfield.setStore(model + 'Store').enable();
                 }
+                loadingMask.hide();
         }, this);
     },
 
@@ -213,6 +219,11 @@ Ext.define('AC.controller.Sessions', {
     },
 
     doLogin: function() {
+        var loadingMask = new Ext.LoadMask({
+                msg: "Loading..."
+            });
+        Ext.Viewport.add(loadingMask);
+
         var form   = this.getLoginForm(),
             values = form.getValues();
 
@@ -226,18 +237,16 @@ Ext.define('AC.controller.Sessions', {
             withCredentials: false,
             useDefaultXhrHeader: false,
             callback: function(response) {
-                //console.log(values);
-                //console.log(response.responseText);
+                loadingMask.hide();
             },
             success: function(response){
-                //var text = response.responseText;
-                //console.log(response.responseText);
                 var data = Ext.JSON.decode(response.responseText);
                 sessionStorage.removeItem('ACUserKey');
                 sessionStorage.removeItem('uid');
                 sessionStorage.setItem('ACUserKey', data.sessionKey);
                 sessionStorage.setItem('uid', data.uid);
-                AC.app.viewRoute('home');
+                // AC.app.viewRoute('home');
+                window.location.replace(window.location.href.split('#')[0]);
            },
             failure: function(response){
                 var text = response.responseText;
@@ -250,7 +259,8 @@ Ext.define('AC.controller.Sessions', {
     doLogout: function(){
         sessionStorage.removeItem('ACUserKey');
         sessionStorage.removeItem('uid');
-        AC.app.viewRoute('login');
+        // AC.app.viewRoute('login');
+        window.location.replace(window.location.href.split('#')[0]);
     },
 
     goRegister: function(){

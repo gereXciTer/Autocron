@@ -8,9 +8,10 @@ Ext.application({
         'Ext.field.Select','Ext.Img','Ext.TitleBar'
     ],
 
-    models: ['User','CarMake','CarModel','CarModelVersion','CarModelImage','CarModelVariant'],
+    models: ['User','UserCar','CarMake','CarModel','CarModelVersion','CarModelImage','CarModelVariant'],
     views: ['Main','Login','Register'],
     controllers: ['Sessions', 'Main'],
+    stores: ['UserCars'],
 
     icon: {
         '57': 'resources/icons/Icon.png',

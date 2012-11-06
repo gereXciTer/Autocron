@@ -1,11 +1,12 @@
 Ext.define("AC.view.Main", {
     extend: 'Ext.tab.Panel',
     requires: [
-        'Ext.TitleBar'
+        'Ext.TitleBar',
+        'AC.view.UserCars'
     ],
+    id: 'mainTabPanel',
     config: {
         tabBarPosition: 'bottom',
-
         items: [
             {
                 docked: 'top',
@@ -22,18 +23,11 @@ Ext.define("AC.view.Main", {
             {
                 title: 'Home',
                 iconCls: 'home',
+                id: 'homePanel',
+                xtype: 'usercarslist',
+                // styleHtmlContent: true,
+                scrollable: true
 
-                styleHtmlContent: true,
-                scrollable: true,
-
-                items: [
-                ],
-
-                html: [
-                    "You've just generated a new Sencha Touch 2 project. What you're looking at right now is the ",
-                    "contents of <a target='_blank' href=\"app/view/Main.js\">app/view/Main.js</a> - edit that file ",
-                    "and refresh to change what's rendered here."
-                ].join("")
             },
             {
                 title: 'Profile',
@@ -59,19 +53,34 @@ Ext.define("AC.view.Main", {
                                 required: true,
                                 label: 'Email'
                             },
+                    //     ]
+                    // },
+                    // {
+                    //     xtype: 'fieldset',
+                    //     id: 'profilePassword',
+                    //     hidden: true,
+                    //     items: [
                             {
                                 xtype: 'passwordfield',
                                 id: 'password',
                                 name: 'password',
-                                required: true,
+                                hidden: true,
+                                required: false,
                                 label: 'New Password'
                             },
                             {
                                 xtype: 'passwordfield',
                                 id: 'password_repeat',
                                 name: 'password_repeat',
-                                required: true,
+                                hidden: true,
+                                required: false,
                                 label: 'Confirm Password'
+                            },
+                            {
+                                xtype: 'button',
+                                text: 'Change password',
+                                action: 'changepassword',
+                                ui: 'default'
                             }
                         ]
                     },
