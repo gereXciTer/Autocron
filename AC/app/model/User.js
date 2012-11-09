@@ -11,6 +11,7 @@ Ext.define('AC.model.User', {
                 autocrontoken : sessionStorage.getItem('ACUserKey'),
                 autocronuserid: sessionStorage.getItem('uid')
             },
+            // autoLoad: true,
             url : AC.helper.Config.apiUrl + 'api/user'
         }
     }

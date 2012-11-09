@@ -42,7 +42,7 @@ Ext.define('AC.controller.Sessions', {
             'button[action=register]': {
                 tap: 'goRegister'
             },
-            'button[ui=back]': {
+            '#registerpanel button[ui=back]': {
                 tap: 'goBack'
             },
             '#loginpanel button[action=login]': {
@@ -153,7 +153,7 @@ Ext.define('AC.controller.Sessions', {
 
     loadCarInfo: function(model, formfield, extraParams){
         var loadingMask = new Ext.LoadMask({
-                msg: "Loading..."
+                message: "Loading..."
             });
         Ext.Viewport.add(loadingMask);
 
@@ -220,7 +220,7 @@ Ext.define('AC.controller.Sessions', {
 
     doLogin: function() {
         var loadingMask = new Ext.LoadMask({
-                msg: "Loading..."
+                message: "Loading..."
             });
         Ext.Viewport.add(loadingMask);
 
@@ -245,8 +245,18 @@ Ext.define('AC.controller.Sessions', {
                 sessionStorage.removeItem('uid');
                 sessionStorage.setItem('ACUserKey', data.sessionKey);
                 sessionStorage.setItem('uid', data.uid);
+                AC.app.updateProxy('User');
+                AC.app.updateProxy('UserCar');
+                var User = Ext.ModelManager.getModel('AC.model.User');
+                User.load(sessionStorage.getItem('uid'), function(data){
+                    data.cars().load(function(data){
+                        Ext.create('AC.store.UserCars');
+                        // console.log(data);
+                        AC.app.viewRoute('home');
+                    });
+                });
                 // AC.app.viewRoute('home');
-                window.location.replace(window.location.href.split('#')[0]);
+                // window.location.replace(window.location.href.split('#')[0]);
            },
             failure: function(response){
                 var text = response.responseText;
@@ -259,8 +269,8 @@ Ext.define('AC.controller.Sessions', {
     doLogout: function(){
         sessionStorage.removeItem('ACUserKey');
         sessionStorage.removeItem('uid');
-        // AC.app.viewRoute('login');
-        window.location.replace(window.location.href.split('#')[0]);
+        AC.app.viewRoute('login');
+        // window.location.replace(window.location.href.split('#')[0]);
     },
 
     goRegister: function(){

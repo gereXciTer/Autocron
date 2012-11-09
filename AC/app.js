@@ -11,7 +11,7 @@ Ext.application({
     models: ['User','UserCar','CarMake','CarModel','CarModelVersion','CarModelImage','CarModelVariant'],
     views: ['Main','Login','Register'],
     controllers: ['Sessions', 'Main'],
-    stores: ['UserCars'],
+    // stores: ['UserCars'],
 
     icon: {
         '57': 'resources/icons/Icon.png',
@@ -44,7 +44,14 @@ Ext.application({
         if(!AC.app.userAuth()){
             AC.app.viewRoute('login');
         }else{
-            AC.app.viewRoute('home');
+            var defaultRoute = 'home';
+            var urlRoute = window.location.href.split('#')[1];
+            var appRoutes = AC.app.getRouter().getRoutes();
+            for(i = 0; i < appRoutes.length; i++){
+                if(appRoutes[i].config.url == urlRoute)
+                    defaultRoute = urlRoute;
+            }
+            AC.app.viewRoute(defaultRoute);
         }
 
     },
@@ -53,6 +60,14 @@ Ext.application({
         AC.app.getHistory().add(Ext.create('Ext.app.Action', {
             url: name
         }));
+    },
+
+    updateProxy: function(model){
+        var Model = Ext.ModelManager.getModel('AC.model.' + model);
+        var proxy = Model.getProxy();
+        proxy.config.headers.autocrontoken = sessionStorage.getItem('ACUserKey');
+        proxy.config.headers.autocronuserid = sessionStorage.getItem('uid');
+        Model.setProxy(proxy);
     },
 
     switchView: function(name, type, direction){

@@ -9,6 +9,21 @@ Ext.define('AC.store.UserCars', {
             'name'
         ],
         autoLoad: true,
-        id: 'UserCars'
+        id: 'UserCars',
+        storeId: 'UserCars',
+        listeners: {
+            load: function(data, records){
+                for(i = 0; i < records.length; i++){
+                    var record = records[i];                    
+                    if(!record.data.image.length){
+                        record.images().load(function(images){
+                            if(images.length){
+                                record.data.image = AC.helper.Config.carImagesUrl + images[0].data.url;
+                            }
+                        });                    
+                    }
+                }
+            }
+        }
     }
 });

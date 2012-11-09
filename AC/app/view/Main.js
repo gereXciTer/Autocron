@@ -24,7 +24,7 @@ Ext.define("AC.view.Main", {
                 title: 'Home',
                 iconCls: 'home',
                 id: 'homePanel',
-                xtype: 'usercarslist',
+                xtype: 'usercars',
                 // styleHtmlContent: true,
                 scrollable: true
 

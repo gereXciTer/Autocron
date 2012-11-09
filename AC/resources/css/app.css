@@ -9702,3 +9702,12 @@ input[type="search"]::-webkit-search-cancel-button {
   background-position-y: 50%;
   background-size: 100%;
 }
+.car-detail .carImage {
+  margin-right: 1em;
+  width: 200px;
+  max-width: 30%;
+  height: auto;
+  max-height: 220px;
+  float: left;
+  vertical-align: top;
+}

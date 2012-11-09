@@ -3,12 +3,15 @@ Ext.define('AC.controller.Main', {
 
     config: {
         routes: {
+            // 'cardetail/:id': 'loadCarDatail',
+            // 'usercarslist': 'loadCarsList'
         },
         refs: {
             profileForm: '#profileForm',
             profilePassword: '#password',
             profilePassword2: '#password_repeat',
             homePanel: '#homePanel',
+            usercars: 'usercars',
             usercarslist: 'usercarslist'
         },
         control: {
@@ -23,41 +26,56 @@ Ext.define('AC.controller.Main', {
             },
             '#homePanel': {
                 initialize: 'showHome'
+            },
+            'usercarslist': {
+                // disclose: 'goCarDatail'
+                disclose: 'showCarDatail',
+                initialize: 'updateCarsList'
+            },
+            'usercars': {
+                back: 'goBack'
             }
         }
     },
 
+    updateCarsList: function(list){
+        Ext.create('AC.store.UserCars');
+        list.refresh();
+    },
+
+    loadCarsList: function(){
+        // AC.app.viewRoute('home');
+        AC.app.switchView('Main');
+    },
+
     showHome: function(){
-        var loadingMask = new Ext.LoadMask({
-            message: "Loading..."
+    },
+
+    loadCarDatail: function(id){
+        Ext.Viewport.add(Ext.create('AC.view.Main'));
+        // var UserCars = Ext.create('AC.store.UserCars');
+        var usercars = this.getUsercars();
+        var UserCar = Ext.ModelManager.getModel('AC.model.UserCar');
+        UserCar.load(id, function(record){
+            // console.log(usercars);
+            usercars.push({
+                xtype: 'usercardetail',
+                title: record.data.name,
+                data: record.getData()
+            })
         });
-        // Ext.Viewport.add(loadingMask);
-        // this.getUsercarslist().refresh();
+    },
 
-        // var User = Ext.ModelManager.getModel('AC.model.User');
-        // User.load(sessionStorage.getItem('uid'), {
-        //     success: function(user){
-        //         sessionStorage.setItem('userData', user.data);
-        //         // var usercars = user.cars();
-        //         // usercars.load(function(records, operation, success) {
-        //         //     console.log(records);
-        //         // }, this);
-        //     },
-        //     callback: function(){
-        //         loadingMask.hide();
-        //     }
-        // });
-
-        // var userCar = Ext.ModelManager.getModel('AC.model.UserCar');
-        // var homePanel = this.getHomePanel();
-        // userCar.load(sessionStorage.getItem('uid'), {
-        //     success: function(data){
-        //         profileForm.setValues(data.data);
-        //     },
-        //     callback: function(){
-        //         loadingMask.hide();
-        //     }
-        // });
+    showCarDatail: function(list, record){
+        // AC.app.viewRoute('cardetail/' + record.data.id);
+        this.getUsercars().push({
+            xtype: 'usercardetail',
+            title: record.data.name,
+            data: record.getData()
+        })
+        AC.app.getHistory().add(Ext.create('Ext.app.Action', {
+            url: 'cardetail/' + record.data.id
+        }));
     },
 
     switchTabs: function(el, value, oldValue, eOpts){
@@ -122,6 +140,14 @@ Ext.define('AC.controller.Main', {
                 });
             }
         });
+    },
+
+    goBack: function(el){
+        AC.app.getHistory().add(Ext.create('Ext.app.Action', {
+            url: el.getActiveItem().id
+        }));
+        console.log(el.getActiveItem().id);
+        return true;
     }
 
 });
